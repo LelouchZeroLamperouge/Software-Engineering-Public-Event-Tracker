@@ -131,6 +131,9 @@
   --bs-form-invalid-color: #ee5f5b;
   --bs-form-invalid-border-color: #ee5f5b;
 }
+.checker{
+  border: 5px solid rgba(58, 63, 68,255);
+}
 h1{
   font-size: xx-large;
   text-align: left;
@@ -175,6 +178,32 @@ fieldset{
   padding: 10px;
   border-radius: 10px 10px 10px 10px;
 }
+.box2{
+  text-align: center;
+  margin-top:5%;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 0;
+  min-height:30%;
+  min-width: 40%;
+  padding: 10px;
+  border-radius: 10px 10px 10px 10px;
+
+}
+.box3{
+  border: 5px solid rgba(58, 63, 68,255);
+  text-align: center;
+  margin-top:0;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 10%;
+  min-height:40%;
+  min-width: 40%;
+  padding: 10px;
+  border-radius: 10px 10px 10px 10px;
+  display: inline-block;
+}
+
 [data-bs-theme=dark] {
   color-scheme: dark;
   --bs-body-color: #dee2e6;
@@ -2156,6 +2185,7 @@ progress {
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.5;
+  display: inline-block;
 }
 
 .col-form-label-lg {
@@ -2178,7 +2208,7 @@ progress {
 
 .form-control {
   display: block;
-  width: 50%;
+  width: 80%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 400;
@@ -2192,6 +2222,25 @@ progress {
   border: var(--bs-border-width) solid rgba(0, 0, 0, 0.6);
   border-radius: var(--bs-border-radius);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control-2 {
+  display: block;
+  width: 80%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #272b30;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid rgba(0, 0, 0, 0.6);
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  display: inline-block;
+  max-width: 60%;
 }
 @media (prefers-reduced-motion: reduce) {
   .form-control {
