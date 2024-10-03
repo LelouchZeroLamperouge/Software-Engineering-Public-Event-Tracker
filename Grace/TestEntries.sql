@@ -1,4 +1,4 @@
-INSERT INTO USERS (F_NAME, L_NAME, EMAIL, PASSWORD, ORGANIZATION, ADMIN, NOTIFICATIONS)
+﻿INSERT INTO USERS (F_NAME, L_NAME, EMAIL, PASSWORD, ORGANIZATION, ADMIN, NOTIFICATIONS)
 VALUES 
 ('John', 'Doe', 'john.doe@example.com', 'password123', 1, 0, 1),
 ('Jane', 'Smith', 'jane.smith@example.com', 'password456', 0, 1, 1),
@@ -6,7 +6,7 @@ VALUES
 ('Bob', 'Williams', 'bob.williams@example.com', 'bobSecure456', 0, 0, 1),
 ('Charlie', 'Brown', 'charlie.brown@example.com', 'charlieStrongPass', 1, 1, 0);
 
-INSERT INTO STATUS (STAT_DESCR)
+INSERT INTO STATUS (STATUS_DESCR)
 VALUES
 ('Not Going'),
 ('Interested'),

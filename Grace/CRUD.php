@@ -10,17 +10,11 @@
     $fname = "Grace";
     $lname = "Carmack";
     $email = "wassup@gmail.com";
-    $password = "UA123!";
+    $password = password_hash('UA123!', PASSWORD_DEFAULT);
     $organization = 1;
     $admin = 1;
     $notifs = 0;
     $stmt->bind_param("ssssiii",$fname,$lname,$email,$password,$organization,$admin,$notifs);
-    $stmt->execute();
-
-    # CREATE A NEW STATUS
-    $stmt = $mysqli->prepare("INSERT INTO STATUS (STATUS_DESCR) VALUES (?)");
-    $status = "Not Going";
-    $stmt->bind_param("s",$status);
     $stmt->execute();
 
     # CREATE A NEW EVENT
@@ -33,39 +27,43 @@
     $stmt->bind_param("ssiss",$event_name,$event_descr,$creator,$when,$website);
     $stmt->execute();
 
-    # CREATE A NEW EVENT_STATUS
-    $stmt = $mysqli->prepare("INSERT INTO EVENT_STATUS (USER_ID,EVENT_ID,STATUS_ID) VALUES (?,?,?)");
-    $user = 1;
-    $event = 1;
-    $status = 2;
-    $stmt->bind_param("iii",$user,$event,$status);
-    $stmt->execute();
 
+    #   READ  #
+    # --------#
 
-    #   RETRIEVE  #
-    # ------------#
-
-    # SELECT ALL RECORDS FROM USERS
-    $sql = "SELECT * FROM USERS";
-    $result = $mysqli->query($sql);
-
-    # SELECT ALL RECORDS FROM EVENTS
+    # SELECT ALL EVENTS
     $sql = "SELECT * FROM EVENTS";
     $result = $mysqli->query($sql);
 
-    # SELECT ALL RECORDS FROM STATUS
-    $sql = "SELECT * FROM STATUS";
-    $result = $mysqli->query($sql);
+    # VERIFYING PASSWORD
+    $plain = 'Hope';
+    $email = 'jane.smith@example.com';
+    $query = $mysqli->prepare('SELECT PASSWORD FROM USERS WHERE EMAIL = ?');
+    if ($query)
+    {
+        $query->bind_param("s",$email);
+        $query->execute();
+        $query->bind_result($password);
+    }
 
-    # SELECT ALL RECORDS FROM EVENT_STATUS
-    $sql = "SELECT * FROM EVENT_STATUS";
-    $result = $mysqli->query($sql);
+    if ($query->fetch())
+    {
+        if (password_verify($plain,$password))
+        {
+            echo "Correct";
+        }
+        else
+        {
+            echo "Incorrect";
+        }
+    }
 
 
     #   UPDATE   #
     #------------#
 
     # UPDATE AN USER (CHANGE TO MATCH WHAT FIELDS ARE BEING UPDATED)
+    # MUST HASH PASSWORD IF CHANGING PASSWORD (LOOK AT CREATING A USER ABOVE)
     $stmt = $mysqli->prepare("UPDATE USERS SET F_NAME=? WHERE USER_ID=?");
     $fname = "Hope";
     $id = 2;
@@ -87,13 +85,6 @@
     $stmt->bind_param("iii",$status,$event_id,$user_id);
     $stmt->execute();
 
-    # UPDATE A STATUS
-    $stmt = $mysqli->prepare("UPDATE STATUS SET STATUS_DESCR=? WHERE STATUS_ID=?");
-    $id = 1;
-    $descr = "test";
-    $stmt->bind_param("si",$descr, $id);
-    $stmt->execute();
-
 
     #   DELETE  #
     #-----------#
@@ -108,19 +99,6 @@
     $stmt = $mysqli->prepare("DELETE FROM EVENTS WHERE EVENT_ID=?");
     $id=2;
     $stmt->bind_param("i",$id);
-    $stmt->execute();
-
-    # DELETE AN EVENT STATUS
-    $stmt = $mysqli->prepare("DELETE FROM EVENT_STATUS WHERE EVENT_ID=? AND USER_ID=?");
-    $user=1;
-    $event=1;
-    $stmt->bind_param("ii",$event,$user);
-    $stmt->execute();
-
-    # DELETE A STATUS
-    $stmt = $mysqli->prepare("DELETE FROM STATUS WHERE STATUS_ID=?");
-    $status=1;
-    $stmt->bind_param("i",$status);
     $stmt->execute();
 
 ?>
