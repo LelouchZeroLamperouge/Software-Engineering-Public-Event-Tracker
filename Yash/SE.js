@@ -20,16 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#loginBtn").addEventListener("click", () => {
         let email = $("#exampleInputEmail1").value;  
         let password = $("#floatingPassword").value;
-        let accType = $("#accType").value;
         let errormsg = "";
 
         if (myMap.has(email)) {
             if (myMap.get(email) === password) {
-                if(accType === "Creator"){
-                    window.location.href = 'ESManageer.html'
-                }else{
-                    window.location.href = 'ES.html';
-                }
+
+                window.location.href = 'ES.html';
               
             } else {
                 errormsg = "Email or password does not match.";
