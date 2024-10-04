@@ -7,10 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#createBtn").addEventListener("click", () => {
         let eName = $("#eName").value;  
         let eDesc = $("#Desc").value; 
-        let eLoc = $("#Loc").value; 
-        let eTime = $("#Date").value; 
+        let eTime = $("#Date").value;
+        let street = $("#strtAdd").value;
+        let city = $("#city").value;
+        let zip = $("#zip").value;
+        let cat = $("#Cat").value;
 
-        alert(eName+" | "+eDesc+" | "+eLoc+" | "+eTime+" Created");
+
+        alert(eName+" "+eDesc+" "+street+" "+ city+" "+ zip+" "+ cat +" "+eTime+" Created");
     });
 
     $("#logoutBtn").addEventListener("click", () => {
