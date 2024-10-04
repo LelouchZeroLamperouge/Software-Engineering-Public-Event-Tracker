@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventHub</title>
-    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="bootstrap-2.css">
 </head>
 <body>
     <header class=".center">
         <img src="2.png"> 
-    <h1> Event Listings </h1> 
+      <h1> Event Listings </h1> 
+      <div class="topBtn">
+        <button type="button" class="btn btn-link1" id="cust">Customer Mode</button>
+        <button type="button" class="btn btn-link1" id="logoutBtn">Logout</button>
+      </div>
     </header>
     <main class="box2">
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
                     <a class="nav-link active" href="ESManageer.html">Home
@@ -39,7 +39,6 @@
                   <input class="form-control me-sm-2" type="search" id="SearchBar" placeholder="Search">
                   <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="Search">Search</button>
                 </form>
-              </div>
             </div>
           </nav>
           <table class="table table-hover" id="ET">
@@ -126,9 +125,10 @@
   <script>
       let today = new Date();
       document.write(today.toDateString());
+      document.write('<br>');
       document.write(today.toTimeString());
   </script>
   <script src="https://unpkg.com/vue@3">
   </script>
-  <script src="ES.js"></script>
+  <script src="ESManage.js"></script>
 </footer>
