@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     $("#logoutBtn").addEventListener("click", () => {
-        window.location.href = 'SE.html';
+        window.location.href = 'SE.php';
     });
 
     $("#creatorBtn").addEventListener("click", () => {
-        window.location.href = 'ESManageer.html';
+        window.location.href = 'ESManageer.php';
     });
 });

@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (myMap.has(email)) {
             if (myMap.get(email) === password) {
 
-                window.location.href = 'ES.html';
+                window.location.href = 'ES.php';
               
             } else {
                 errormsg = "Email or password does not match.";
