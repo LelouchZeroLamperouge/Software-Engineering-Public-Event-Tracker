@@ -1,10 +1,10 @@
-
 <?php
 include_once("config.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Details tab for each event within the database while not in creator mode. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +15,16 @@ include_once("config.php");
     <header class=".center">
         <img src="2.png"> 
       <h1> Event Listings </h1> 
-      <div class="topBtn">
-        <button type="button" class="btn btn-link1" id="creatorBtn">Creator Mode</button>
-        <button type="button" class="btn btn-link1" id="logoutBtn">Logout</button>
+      <div class="topBtn"> 
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" > Account</button>
+          <div class="dropdown-content">
+              <a href="Create.php">My Profile</a>
+              <a href="ESManageer.php">Creator Mode</a>
+              <a href="https://example.com">My Events</a>
+              <a href="SE.php">Logout</a>
+          </div>
+         </div>
       </div>
     </header>
     <main class="box2">
@@ -26,9 +33,9 @@ include_once("config.php");
               <a class="navbar-brand" href="#">Navbar</a>
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="ES.html">Home </a>
+                    <a class="nav-link" href="ES.php">Home </a>
                     <li class="nav-item">
-                      <a class="nav-link active" href="ESDetails.html">Details
+                      <a class="nav-link active" href="ESDetails.php">Details
                         <span class="visually-hidden">(current)</span>
                       </a>
                     </li>

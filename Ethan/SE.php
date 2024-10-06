@@ -1,9 +1,10 @@
 <?php
 include_once("config.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
+<!--Login page for users here they will log in if information is correct they'll be sent to ES.php. If create is clicked they'll be redirected to Create.php first-->
 <head class="form-group">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

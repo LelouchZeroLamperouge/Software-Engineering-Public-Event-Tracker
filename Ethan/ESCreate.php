@@ -1,10 +1,10 @@
-
 <?php
 include_once("config.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Event Creation tab will take information and add event using the ESEventCreate JavaScript-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +15,16 @@ include_once("config.php");
     <header class=".center">
         <img src="2.png"> 
       <h1> Event Listings </h1> 
-      <div class="topBtn">
-        <button type="button" class="btn btn-link1" id="cust">Customer Mode</button>
-        <button type="button" class="btn btn-link1" id="logoutBtn">Logout</button>
+      <div class="topBtn"> 
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" > Account</button>
+          <div class="dropdown-content">
+              <a href="Create.php">My Profile</a>
+              <a href="ES.php">Customer Mode</a>
+              <a href="https://example.com">My Events</a>
+              <a href="SE.php">Logout</a>
+          </div>
+         </div>
       </div>
       
     </header>
@@ -28,17 +35,17 @@ include_once("config.php");
               <a class="navbar-brand" href="#">Navbar</a>
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="ESManageer.html">Home</a>
+                    <a class="nav-link" href="ESManageer.php">Home</a>
                     <li class="nav-item">
-                      <a class="nav-link" href="ESDetailsManager.html">Details</a>
+                      <a class="nav-link" href="ESDetailsManager.php">Details</a>
                     </li>
                     <li class = "nav-item">
-                    <a class="nav-link active" href="ESCreate.html">Create
+                    <a class="nav-link active" href="ESCreate.php">Create
                         <span class="visually-hidden">(current)</span>
                     </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ESManage.html">Manage</a>
+                        <a class="nav-link" href="ESManage.php">Manage</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -78,7 +85,7 @@ include_once("config.php");
                 <br>
                 
                 <label for="Cat">Category</label>
-                <select name="Cat" id="Cat">
+                <select class="col-form-label mt-4" name="Cat" id="Cat">
                     <option value="sport">Sports</option>>
                     <option value="gaming">Gaming</option>                  
                     <option value="movies">Movies</option> 

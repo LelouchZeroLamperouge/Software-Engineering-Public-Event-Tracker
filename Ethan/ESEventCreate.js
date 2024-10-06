@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(eName+" "+eDesc+" "+street+" "+ city+" "+ zip+" "+ cat +" "+eTime+" Created");
     });
 
+    $("#profileBtn").addEventListener("click", () => {
+        window.location.href = 'Create.php';
+    });
+    
     $("#logoutBtn").addEventListener("click", () => {
         window.location.href = 'SE.php';
     });

@@ -9,5 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#cust").addEventListener("click", () => {
         window.location.href = 'ES.php';
     });
+
+    $("#profileBtn").addEventListener("click", () => {
+        window.location.href = 'Create.php';
+    });
 });
 

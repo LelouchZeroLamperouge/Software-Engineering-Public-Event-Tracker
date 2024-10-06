@@ -22,12 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#Search").addEventListener("click", () => {
         filterEventsES();
     });
+    $("#profileBtn").addEventListener("click", () => {
+        window.location.href = 'Create.php';
+    });
+    $("#creatorBtn").addEventListener("click", () => {
+        window.location.href = 'ESManageer.php';
+    });
 
     $("#logoutBtn").addEventListener("click", () => {
         window.location.href = 'SE.php';
     });
 
-    $("#creatorBtn").addEventListener("click", () => {
-        window.location.href = 'ESManageer.php';
-    });
+   
 });
