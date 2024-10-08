@@ -3,9 +3,7 @@ include_once("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        ini_set('display_errors',1);
-        ini_set('display_startup_errors',1);
-        error_reporting(E_ALL);
+
         $email = $_POST['email'];
 
       
@@ -29,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $org = $_POST['Organization'];
             $admin = $_POST['Admin'];
             $notif = $_POST['Notif'];
+            $hashed = password_hash($pass, PASSWORD_DEFAULT);
             
             
             if ($org === "yOrg") {
@@ -57,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
              
             $stmt = $mysqli->prepare("INSERT INTO USERS (F_NAME,L_NAME,EMAIL,PASSWORD,ORGANIZATION,ADMIN,NOTIFICATIONS) VALUES (?,?,?,?,?,?,?)");
-            $stmt->bind_param("ssssiii",$fName,$lName,$email,$pass,$org,$admin,$notif);
+            $stmt->bind_param("ssssiii",$fName,$lName,$email,$hashed,$org,$admin,$notif);
             $stmt->execute();
             }
            

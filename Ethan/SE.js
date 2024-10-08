@@ -9,6 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = 'Create.php';
     });
 
+
+    $("#fButton").addEventListener("click", () => {
+        window.location.href = 'FP.php';
+    });
+    
+    
+
     $("#loginBtn").addEventListener("click", () => {
         let email = $("#exampleInputEmail1").value;  
         let password = $("#floatingPassword").value;

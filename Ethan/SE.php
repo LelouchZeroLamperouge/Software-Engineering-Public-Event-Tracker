@@ -1,5 +1,5 @@
 <?php
-include_once("config.php");
+    include_once("config.php");
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +35,7 @@ include_once("config.php");
             </fieldset>
             <button type="button" class="btn btn-link" id="createBtn">Create Account</button>
             <button  type="button" class="btn btn-link" id="loginBtn">Login</button>
+            <button  type="button" class="btn btn-link" id="fButton">Forgot Password</button>
                 <br>
         </div>
     </main>
