@@ -1,32 +1,47 @@
 <?php
     include_once("config.php");
+    
+    ini_set('display_errors',1);
+    ini_set('display_startup_errors',1);
+    error_reporting(E_ALL);
 
-    $email = $_POST['email'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
+        $email = $_POST['email'];
+
+            
+        $sql = "SELECT * FROM USERS WHERE EMAIL = ?"; 
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("s", $email);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+
+        if ($result->num_rows > 0) {
+
+            $pass = $_POST['pass'];
+            $hashed = password_hash($pass, PASSWORD_DEFAULT);
+            $cPass = $_POST['cPass'];
+
+            if (empty($pass)|| empty($email)){
+                echo "One or more of the values is empty";
+            } else{
+                if($pass === $cPass){
+                    $stmt = $mysqli->prepare("UPDATE USERS SET PASSWORD = ? WHERE EMAIL = ?");
+                    $stmt->bind_param("ss",$hashed,$email);
+                    $stmt->execute();
+
+                }else{
+                    echo "Passwords don't match";
+                }
+
+            }
         
-    $sql = "SELECT * FROM USERS WHERE EMAIL = ?"; 
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $email);
-
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-
-    if ($result->num_rows > 0) {
-
-        $pass = $_POST['pass'];
-        $hashed = password_hash($pass, PASSWORD_DEFAULT);
-
-        if (empty($pass)|| empty($email)){
-            echo "One or more of the values is empty";
-        } else{
-            $stmt = $mysqli->prepare("UPDATE USERS SET PASSWORD ? WHERE EMAIL = ?");
-            $stmt->bind_param("ss",$hashed,$email);
+        } else {
+            echo "Email doesn't exists";
         }
-       
-    } else {
-        echo "Email doesn't exists";
     }
 ?>
 
@@ -70,6 +85,10 @@
                     <br>
                     <label for="password" type="form-label">Password:</label>
                     <input type="password" id="floatingPassword" placeholder="Password" autocomplete="off" name="pass">
+                    <span>*</span>
+                    <br>
+                    <label for="password" type="form-label">Confirm Password:</label>
+                    <input type="password" id="floatingPassword" placeholder="Confirm Password" autocomplete="off" name="cPass">
                     <span>*</span>
                     <br>
                     <button type="submit" class="btn btn-link" id="rButton">Reset Button</button>
