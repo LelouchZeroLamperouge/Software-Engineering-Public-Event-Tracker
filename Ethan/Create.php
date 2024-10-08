@@ -92,6 +92,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="box11">
             <fieldset>
                 <legend> Create Account </legend>
+
+                <form method="POST" action="">
+
                 <label class="col-form-label mt-4" for="inputDefault">First Name:</label>
                 <input type="text" class="form-control-2" placeholder="Name" id="fName" name="fName">
                 <span>*</span>
@@ -138,8 +141,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </select>
                 <span>*</span>
                 <br>
+                </form>
             </fieldset>
-            <button type="button" class="btn btn-link" id="createBtn">Create Account</button>
+            <button type="submit" class="btn btn-link" id="createBtn">Create Account</button>
             <br>
         </div>
     </main>
