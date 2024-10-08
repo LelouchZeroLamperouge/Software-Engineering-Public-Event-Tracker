@@ -1,5 +1,63 @@
 <?php
 include_once("config.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    
+        $email = $_POST['email'];
+
+    
+        $sql = "SELECT * FROM users WHERE email = ?"; 
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+      
+        if ($result->num_rows > 0) {
+            echo "Account already exists in the database.";
+        } else {
+            $fName = $_POST['fName'];
+            $lName = $_POST['lName'];
+            $pass = $_POST['pass'];
+            $org = $_POST['Organization'];
+            $admin = $_POST['Admin'];
+            $notif = $_POST['Notif'];
+
+            if ($org === "yOrg") {
+                $org = true;
+            } else {
+                $org = false;
+            }
+            
+          
+            if ($admin === "yAdmin") {
+                $admin = true;
+            } else {
+                $admin = false;
+            }
+            
+            if ($notif === "yNotif") {
+                $notif = true;
+            } else {
+             
+        
+            if (empty($fName)|| empty($lName) || empty($pass) || empty($org) || empty($admin) || empty($notif)){
+                echo "One or more of the values is empty";
+            } else{
+            $stmt = $mysqli->prepare("INSERT INTO USERS (F_NAME,L_NAME,EMAIL,PASSWORD,ORGINIZATION,ADMIN,NOTIFICATIONS) VALUES (?,?,?,?,?,?,?,)");
+            $stmt->bind_param("ssssbbb",$eventName,$eventDescr,$eventStreet,$eventCity,$eventZip,$creator,$eventCat, $eventDate,$website);
+            $stmt->execute();
+            }
+        }
+
+        $stmt->close();
+
+
+}
+
 ?>
 
 
@@ -35,21 +93,21 @@ include_once("config.php");
             <fieldset>
                 <legend> Create Account </legend>
                 <label class="col-form-label mt-4" for="inputDefault">First Name:</label>
-                <input type="text" class="form-control-2" placeholder="Name" id="fName">
+                <input type="text" class="form-control-2" placeholder="Name" id="fName" name="fName">
                 <span>*</span>
                 <br>
 
                 <label class="col-form-label mt-4" for="inputDefault">Last Name:</label>
-                <input type="text" class="form-control-2" placeholder="Name" id="lName">
+                <input type="text" class="form-control-2" placeholder="Name" id="lName" name="lName">
                 <span>*</span>
                 <br>
 
                 <label for="exampleInputEmail1" class="form-label mt-4">Email address:</label>
-                <input type="email" class="form-control-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
                 <span>*</span>
                 <br>
                 <label for="password" class="col-form-label mt-4" type="form-label">Password:</label>
-                <input type="password" class="form-control-2" id="floatingPassword" placeholder="Password" autocomplete="off">
+                <input type="password" class="form-control-2" id="floatingPassword" placeholder="Password" autocomplete="off" name="pass">
                 <span>*</span>
                 <br>
                 <label for="password"  class="col-form-label mt-4" type="form-label">Confirm Password:</label>
