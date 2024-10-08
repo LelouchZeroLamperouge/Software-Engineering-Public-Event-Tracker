@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (email && password && fName && lName && cPassword) {  
             myMap.set(email, password);
             if(password === cPassword){
-                    alert("Account created for: " + fName +" "+lName);
-                    window.location.href = 'SE.php';
-
+                   //alert("Account created for: " + fName +" "+lName);
             }else{
                 alert("Passwords do not match!")
             }

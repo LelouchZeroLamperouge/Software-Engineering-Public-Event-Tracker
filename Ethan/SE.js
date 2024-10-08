@@ -6,15 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let myMap = new Map();
 
     $("#createBtn").addEventListener("click", () => {
-        let email = $("#exampleInputEmail1").value;  
-        let password = $("#floatingPassword").value; 
-
-        if (email && password) {  
-            myMap.set(email, password);
-            alert("Account created for: " + email);
-        } else {
-            alert("Please provide both an email and a password.");
-        }
+            window.location.href = 'Create.php';
     });
 
     $("#loginBtn").addEventListener("click", () => {

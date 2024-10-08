@@ -3,12 +3,14 @@ include_once("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    
+        ini_set('display_errors',1);
+        ini_set('display_startup_errors',1);
+        error_reporting(E_ALL);
         $email = $_POST['email'];
 
-    
-        $sql = "SELECT * FROM users WHERE email = ?"; 
-        $stmt = $conn->prepare($sql);
+      
+        $sql = "SELECT * FROM USERS WHERE EMAIL = ?"; 
+        $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("s", $email);
 
         $stmt->execute();
@@ -19,43 +21,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($result->num_rows > 0) {
             echo "Account already exists in the database.";
         } else {
+        
+        
             $fName = $_POST['fName'];
-            $lName = $_POST['lName'];
+            $lName =  $_POST['lName'];
             $pass = $_POST['pass'];
             $org = $_POST['Organization'];
             $admin = $_POST['Admin'];
             $notif = $_POST['Notif'];
-
+            
+            
             if ($org === "yOrg") {
-                $org = true;
+                $org = 1;
             } else {
-                $org = false;
+                $org = 0;
             }
             
           
             if ($admin === "yAdmin") {
-                $admin = true;
+                $admin = 1;
             } else {
-                $admin = false;
+                $admin = 0;
             }
             
             if ($notif === "yNotif") {
-                $notif = true;
+                $notif = 1;
             } else {
+                $notif = 0;
+            }
+            
              
         
-            if (empty($fName)|| empty($lName) || empty($pass) || empty($org) || empty($admin) || empty($notif)){
+           if (empty($fName)|| empty($lName) || empty($pass)){
                 echo "One or more of the values is empty";
             } else{
-            $stmt = $mysqli->prepare("INSERT INTO USERS (F_NAME,L_NAME,EMAIL,PASSWORD,ORGINIZATION,ADMIN,NOTIFICATIONS) VALUES (?,?,?,?,?,?,?,)");
-            $stmt->bind_param("ssssbbb",$eventName,$eventDescr,$eventStreet,$eventCity,$eventZip,$creator,$eventCat, $eventDate,$website);
+             
+            $stmt = $mysqli->prepare("INSERT INTO USERS (F_NAME,L_NAME,EMAIL,PASSWORD,ORGANIZATION,ADMIN,NOTIFICATIONS) VALUES (?,?,?,?,?,?,?)");
+            $stmt->bind_param("ssssiii",$fName,$lName,$email,$pass,$org,$admin,$notif);
             $stmt->execute();
             }
+           
+           
         }
 
-        $stmt->close();
+        
 
 
+    
 }
 
 ?>
@@ -141,10 +153,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </select>
                 <span>*</span>
                 <br>
+
+                <button type="submit" class="btn btn-link" id="createBtn">Create Account</button>
+                <br>
                 </form>
             </fieldset>
-            <button type="submit" class="btn btn-link" id="createBtn">Create Account</button>
-            <br>
         </div>
     </main>
 
