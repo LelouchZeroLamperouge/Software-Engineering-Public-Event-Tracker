@@ -3,7 +3,7 @@
 
 <?php
 
-# Verifying the user is logged in. If it is, it saves the user_id for future use. If not, it redirects to login page.
+/* Verifying the user is logged in. If it is, it saves the user_id for future use. If not, it redirects to login page.
 session_start();
 if(isset($_SESSION['user_id']))
 {
@@ -13,7 +13,7 @@ else
 {
   #header("Location: login.php");
   exit();
-}
+}*/
 
 include_once("config.php");
 
