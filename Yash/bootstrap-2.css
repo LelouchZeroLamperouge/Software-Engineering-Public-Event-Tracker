@@ -173,6 +173,28 @@ img{
   margin-right: 0;
   margin-left:0;
   padding-right: 0;
+  text-align: center;
+}
+
+.btn-link2{
+  --bs-btn-font-weight: 400;
+  --bs-btn-color: #8fb9e8;
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-color: #426cb3;
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-active-color: var(--bs-link-hover-color);
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-disabled-color: #0000EE;
+  --bs-btn-disabled-border-color: transparent;
+  --bs-btn-box-shadow: 0 0 0 #000;
+  --bs-btn-focus-shadow-rgb: 217, 217, 217;
+  text-decoration: underline;
+  margin-right: 0;
+  margin-top: 1%;
+  margin-left:45%;
+  padding-right: 0;
+  text-align: center;
 }
 .img1{
   height:20%;
@@ -585,6 +607,7 @@ caption {
 th {
   text-align: inherit;
   text-align: -webkit-match-parent;
+  vertical-align: center;
 }
 
 thead,
@@ -596,6 +619,8 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
+  vertical-align: center;
+  
 }
 
 label{
@@ -609,6 +634,7 @@ button {
   border-radius: 0;
   text-align: center;
   color: #4b6da0;
+  float: center;
 }
 .placeholder{
   display:  inline-block;
@@ -2622,7 +2648,7 @@ textarea.form-control-lg {
 .form-check-input:checked {
   background-color: #3a3f44;
   border-color: #3a3f44;
-}
+} 
 .form-check-input:checked[type=checkbox] {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
 }
@@ -3535,6 +3561,7 @@ textarea.form-control-lg {
   --bs-btn-box-shadow: 0 0 0 #000;
   --bs-btn-focus-shadow-rgb: 217, 217, 217;
   text-decoration: underline;
+  
 }
 .btn-link:focus-visible {
   color: var(--bs-btn-color);

@@ -4,14 +4,14 @@ const $ = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
     $("#logoutBtn").addEventListener("click", () => {
-        window.location.href = 'SE.html';
+        window.location.href = 'SE.php';
     });
     $("#cust").addEventListener("click", () => {
-        window.location.href = 'ES.html';
+        window.location.href = 'ES.php';
     });
 
     $("#profileBtn").addEventListener("click", () => {
-        window.location.href = 'Create.html';
+        window.location.href = 'Create.php';
     });
 });
 

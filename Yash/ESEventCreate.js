@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     $("#profileBtn").addEventListener("click", () => {
-        window.location.href = 'Create.html';
+        window.location.href = 'Create.php';
     });
     
     $("#logoutBtn").addEventListener("click", () => {
-        window.location.href = 'SE.html';
+        window.location.href = 'SE.php';
     });
     $("#cust").addEventListener("click", () => {
-        window.location.href = 'ES.html';
+        window.location.href = 'ES.php';
     });
 });
 

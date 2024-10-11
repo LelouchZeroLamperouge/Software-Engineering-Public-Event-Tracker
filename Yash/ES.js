@@ -23,14 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
         filterEventsES();
     });
     $("#profileBtn").addEventListener("click", () => {
-        window.location.href = 'Create.html';
+        window.location.href = 'Create.php';
     });
     $("#creatorBtn").addEventListener("click", () => {
-        window.location.href = 'ESManageer.html';
+        window.location.href = 'ESManageer.php';
     });
 
     $("#logoutBtn").addEventListener("click", () => {
-        window.location.href = 'SE.html';
+        window.location.href = 'SE.php';
     });
 
    

@@ -6,16 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let myMap = new Map();
 
     $("#createBtn").addEventListener("click", () => {
-        let email = $("#exampleInputEmail1").value;  
-        let password = $("#floatingPassword").value; 
-
-        if (email && password) {  
-            myMap.set(email, password);
-            alert("Account created for: " + email);
-        } else {
-            alert("Please provide both an email and a password.");
-        }
+            window.location.href = 'Create.php';
     });
+
+
+    $("#fButton").addEventListener("click", () => {
+        window.location.href = 'FP.php';
+    });
+    
+    
 
     $("#loginBtn").addEventListener("click", () => {
         let email = $("#exampleInputEmail1").value;  
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (myMap.has(email)) {
             if (myMap.get(email) === password) {
 
-                window.location.href = 'ES.html';
+                window.location.href = 'ES.php';
               
             } else {
                 errormsg = "Email or password does not match.";
