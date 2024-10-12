@@ -1,5 +1,16 @@
 <?php
 include_once("config.php");
+
+session_start();
+if (isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+}
+else
+{
+  header("Location: SE.php");
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +33,7 @@ include_once("config.php");
               <a href="Create.php">My Profile</a>
               <a href="ESManageer.php">Creator Mode</a>
               <a href="https://example.com">My Events</a>
-              <a href="SE.php">Logout</a>
+              <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
       </div>

@@ -1,6 +1,17 @@
 <?php
 include_once("config.php");
 
+session_start();
+if (isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+}
+else
+{
+  header("Location: SE.php");
+  exit();
+}
+
 // Will display errors to the webpage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -74,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <a href="Create.php">My Profile</a>
                     <a href="ES.php">Customer Mode</a>
                     <a href="https://example.com">My Events</a>
-                    <a href="SE.php">Logout</a>
+                    <a href="Confirm_Logout.php">Logout</a>
                 </div>
             </div>
         </div>

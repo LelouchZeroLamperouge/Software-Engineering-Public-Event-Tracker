@@ -33,11 +33,27 @@
                     $stmt->bind_param("ss",$hashed,$email);
                     $stmt->execute();
 
-                }else{
-                    echo "Passwords don't match";
-                }
+                    session_start();
+                    $email = $_POST['email'];
+                    $sql = "SELECT USER_ID FROM USERS WHERE EMAIL = ?";
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param('s', $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
-            }
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $user_id = $row['USER_ID'];
+                        }
+                    } else {
+                        echo "No users found.";
+                        header("Location: SE.php");
+                    }
+
+                    $_SESSION['user_id'] = $user_id;
+                    header("Location: ESDetails.php");
+
+                }}       
         
         } else {
             echo "Email doesn't exists";
@@ -59,17 +75,7 @@
     <img class=".img1" src="2.png">
         <h1>Welcome to EventHub</h1>
 
-        <div class="topBtn"> 
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" > Account</button>
-              <div class="dropdown-content">
-                  <a href="Create.php">My Profile</a>
-                  <a href="ESManageer.php">Creator Mode</a>
-                  <a href="https://example.com">My Events</a>
-                  <a href="SE.php">Logout</a>
-              </div>
-             </div>
-          </div>
+
     </header>
     <main>
         
