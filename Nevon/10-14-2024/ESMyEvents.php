@@ -48,13 +48,13 @@ else
               <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" href="ES.php">Home
+                    <a class="nav-link" href="ES.php">Home
                       <span class="visually-hidden">(current)</span>
                     </a>
                     <li class="nav-item">
                       <a class="nav-link" href="ESDetails.php">Details</a>
                     </li>
-                    <li class="nav-item">
+                     <li class="nav-item active">
                       <a class="nav-link" href="ESMyEvents.php">My Events</a>
                     </li>
                 </ul>
@@ -78,32 +78,26 @@ else
             </thead>
             <tbody>
                <?php
-                // Prepared statement for fetching event and RSVP data
-                $stmt = $mysqli->prepare("
-                    SELECT E.EVENT_ID, E.EVENT_NAME, E.STREET_ADD, E.ZIPCODE, E.DATETIME, R.STATUS_ID
-                    FROM EVENTS E
-                    LEFT JOIN EVENT_STATUS R ON E.EVENT_ID = R.EVENT_ID AND R.USER_ID = ?
-                ");
+               $stmt = $mysqli->prepare("
+		    SELECT E.EVENT_ID, E.EVENT_NAME, E.STREET_ADD, E.ZIPCODE, E.DATETIME, R.STATUS_ID
+		    FROM EVENTS E
+		    LEFT JOIN EVENT_STATUS R ON E.EVENT_ID = R.EVENT_ID
+		    WHERE R.USER_ID = ? AND (R.STATUS_ID = 2 OR R.STATUS_ID = 3)
+		    ORDER BY R.STATUS_ID DESC
+					");
+
                 $stmt->bind_param("i", $user_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 
-                // Fetch each event and its status
+                // Fetch each event and its RSVP status
                 while ($row = $result->fetch_assoc()) {
-                     // Handle NULL values for STATUS_ID
-                    $statusText = ""; // Default if there is no RSVP
-                    if (!is_null($row['STATUS_ID'])) {
-                        switch ($row['STATUS_ID']) {
-                            case 3:
-                                $statusText = "Going";
-                                break;
-                            case 1:
-                                $statusText = "Not Going";
-                                break;
-                            case 2:
-                                $statusText = "Interested";
-                                break;
-                        }
+                    // Display the appropriate status
+                    $statusText = "";
+                    if ($row['STATUS_ID'] == 3) {
+                        $statusText = "Going";
+                    } elseif ($row['STATUS_ID'] == 2) {
+                        $statusText = "Interested";
                     }
 
                         echo "<tr>";
