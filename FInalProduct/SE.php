@@ -68,12 +68,15 @@
                 <input type="password" class="form-control-2" id="floatingPassword" placeholder="Password" autocomplete="off" name="pass">
                 <span>*</span>
                 <br>
-                <button  type="submit" class="btn btn-link" id="login">Login</button>
+                <div class="botBtn1" >
+                    <br>
+                <button  type="submit" id="login">Login</button>
+                </div>
                 </form>  
                 
             </fieldset>
             <?php
-            echo "<a href='Create.php' class='btn btn-link' id='createBtn'>Create</a>";
+            echo "<a href='Create.php' class='btn btn-link' id='createBtn'>Create Account</a>";
             echo "<a href='FP.php' class='btn btn-link' id='fButton'>Forgot Password</a>";
 
             ?>

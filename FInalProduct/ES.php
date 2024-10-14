@@ -61,6 +61,7 @@ include_once("config.php");
                 <th scope="col">Event Time</th>
                 <th scope="col">Zip Code</th>
                 <th scope="col">RSVP</th>
+                <th scope="col"> </th>
               </tr>
             </thead>
             <tbody>

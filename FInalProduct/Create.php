@@ -161,8 +161,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </select>
                 <span>*</span>
                 <br>
+                <div class="botBtn1">
+                    <br>
+                    <button type="submit" id="createBtn">Create Account</button>
 
-                <button type="submit" class="btn btn-link" id="createBtn">Create Account</button>
+                </div>
                 <br>
                 </form>
             </fieldset>

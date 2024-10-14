@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Event - EventHub</title>
+    <title>LogOut- EventHub</title>
     <link rel="stylesheet" href="bootstrap-2.css">
 </head>
 
@@ -43,13 +43,15 @@
 
     <main>
 
-        <div class="box3">
+        <div class="box1">
             <fieldset>
                 <legend> Are you sure you want to logout? </legend>
 
                 <!-- Form to update the event -->
                 <form method="POST" action="">
-                    <button type="submit" class="btn btn-link" id="logBtn">Logout</button>
+                <div class="botBtn1">
+                    <button  type="submit" id="logBtn">Logout</button>
+                </div>
                 </form>
             </fieldset>
         </div>

@@ -200,8 +200,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 <input type="text" class="form-control-2" placeholder="Website" id="Date" name="website">
                 <span>*</span>
                 <br>
-
-                <button type="submit" class="btn btn-link" id="createBtn">Create Event</button>
+                <div class="botBtn1">
+                  <br>
+                 <button type="submit"  id="createBtn">Create Event</button>
+                </div>
                 </form>
 
             </fieldset>

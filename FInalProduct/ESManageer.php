@@ -20,7 +20,7 @@ include_once("config.php");
             <button class="btn btn-primary dropdown-toggle" > Account</button>
             <div class="dropdown-content">
                 <a href="Create.php">My Profile</a>
-                <a href="ES.php">Creator Mode</a>
+                <a href="ES.php">Customer Mode</a>
                 <a href="https://example.com">My Events</a>
                 <a href="Confirm_Logout.php">Logout</a>
             </div>
@@ -29,27 +29,29 @@ include_once("config.php");
         
     </header>
     <main class="box2">
-        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" href="ES.php">Home
+                    <a class="nav-link active" href="ESManageer.php">Home
                       <span class="visually-hidden">(current)</span>
                     </a>
                     <li class="nav-item">
-                      <a class="nav-link" href="ESDetails.php">Details</a>
+                      <a class="nav-link" href="ESDetailsManager.php">Details</a>
+                    </li>
+                    <li class = "nav-item">
+                    <a class="nav-link" href="ESCreate.php">Create
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ESManage.php">Manage</a>
                     </li>
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-sm-2" type="search" id="SearchBar" placeholder="Search">
                   <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="Search">Search</button>
                 </form>
-              </div>
             </div>
           </nav>
           <table class="table table-hover" id="ET">
@@ -110,5 +112,5 @@ include_once("config.php");
   </script>
   <script src="https://unpkg.com/vue@3">
   </script>
-  <script src="ES.js"></script>
+  <script src="ESManage.js"></script>
 </footer>
