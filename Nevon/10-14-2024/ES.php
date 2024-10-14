@@ -32,6 +32,7 @@ else
                 <a href="Create.php">My Profile</a>
                 <a href="ESManageer.php">Creator Mode</a>
                 <a href="https://example.com">My Events</a>
+                <a href="ESSettings.php">Settings</a>
                 <a href="SE.php">Logout</a>
             </div>
            </div>
