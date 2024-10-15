@@ -1,5 +1,16 @@
 <?php
 include_once("config.php");
+
+session_start();
+if (isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+}
+else
+{
+  header("Location: SE.php");
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,10 +30,10 @@ include_once("config.php");
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" > Account</button>
           <div class="dropdown-content">
-              <a href="Create.php">My Profile</a>
+              <a href="userSettings.php">My Profile</a>
               <a href="ES.php">Customer Mode</a>
               <a href="https://example.com">My Events</a>
-              <a href="SE.php">Logout</a>
+              <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
       </div>
@@ -57,13 +68,33 @@ include_once("config.php");
                   <tr class="table-active">
                     <th scope="col">Event Name</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                <?php
+                $sql = "SELECT EVENT_ID, EVENT_NAME, EVENT_DESCR FROM EVENTS WHERE CREATOR = ? ";
+                $query = $mysqli->prepare($sql);
+
+                $query->bind_param("i",$user_id);
+                $query->execute();
+                $data = $query->get_result();
+
+                if ($data->num_rows > 0) {
+                    while ($row = $data->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['EVENT_NAME']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['EVENT_DESCR']) . "</td>";
+                        echo "<td>  <a href='edit_record.php?id=" . $row['EVENT_ID'] . "' class='btn btn-warning'>Edit</a> </td>";
+                        echo "<td>  <a href='delete_record.php?id=" . $row['EVENT_ID'] . "' class='btn btn-warning'>Delete</a> </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='3'>No events found.</td></tr>";
+                }
+                ?>
                 </tbody>
               </table>
-              
-
     </main>
     
 </body>
@@ -82,3 +113,4 @@ include_once("config.php");
   </script>
   <script src="ESManage.js"></script>
 </footer>
+

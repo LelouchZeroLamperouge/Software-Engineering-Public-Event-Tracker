@@ -1,5 +1,16 @@
 <?php
 include_once("config.php");
+
+session_start();
+if (isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+}
+else
+{
+  header("Location: SE.php");
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,10 +30,10 @@ include_once("config.php");
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" > Account</button>
           <div class="dropdown-content">
-              <a href="Create.php">My Profile</a>
+              <a href="userSettings.php">My Profile</a>
               <a href="ES.php">Customer Mode</a>
               <a href="https://example.com">My Events</a>
-              <a href="SE.php">Logout</a>
+              <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
       </div>

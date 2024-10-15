@@ -1,5 +1,40 @@
 <?php
     include_once("config.php");
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $password = $_POST['pass'];
+        $email = $_POST['email'];
+        $query = $mysqli->prepare('SELECT USER_ID, PASSWORD FROM USERS WHERE EMAIL = ?');
+
+        if ($query)
+        {
+            $query->bind_param("s",$email);
+            $query->execute();
+            $data = $query->get_result();
+            if ($data->num_rows > 0)
+            {
+                while ($row = $data->fetch_assoc()) {
+                    $encrypted = $row['PASSWORD'];
+                    $user_id = $row['USER_ID'];
+                }
+            }
+            else
+            {
+                header("Location: SE.php");
+            }
+
+            if (password_verify($password,$encrypted))
+                {
+                    session_start();
+                    $_SESSION['user_id'] = $user_id;
+                    header("Location: ES.php");
+                }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,21 +56,30 @@
         <div class="box1">
             <fieldset>
                 <legend> Login</legend>
+            <!--Form to login-->
+                <form method="POST" action="">
+                
     
                 <label for="exampleInputEmail1" class="form-label mt-4">Email address:</label>
-                <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
                 <span>*</span>
                 <br>
-                <label for="password" type="form-label">Password:</label>
-                <input type="password" id="floatingPassword" placeholder="Password" autocomplete="off">
+                <label for="password" class="col-form-label mt-4" type="form-label">Password:</label>
+                <input type="password" class="form-control-2" id="floatingPassword" placeholder="Password" autocomplete="off" name="pass">
                 <span>*</span>
                 <br>
-                
+                <div class="botBtn1" >
+                    <br>
+                <button  type="submit" id="login">Login</button>
+                </div>
+                </form>  
                 
             </fieldset>
-            <button type="button" class="btn btn-link" id="createBtn">Create Account</button>
-            <button  type="button" class="btn btn-link" id="loginBtn">Login</button>
-            <button  type="button" class="btn btn-link" id="fButton">Forgot Password</button>
+            <?php
+            echo "<a href='Create.php' class='btn btn-link' id='createBtn'>Create Account</a>";
+            echo "<a href='FP.php' class='btn btn-link' id='fButton'>Forgot Password</a>";
+
+            ?>
                 <br>
         </div>
     </main>

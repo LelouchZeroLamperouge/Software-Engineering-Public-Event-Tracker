@@ -4,7 +4,7 @@ include_once("config.php");
 
 <!DOCTYPE html>
 <html lang="en">
-<!--Home page for user if in creator mode here they will see all events nearby-->
+<!--Home page for user if not in creator mode here they will see all events nearby-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,21 +14,22 @@ include_once("config.php");
 <body>
     <header class=".center">
         <img src="2.png"> 
-      <h1> Event Listings </h1> 
-      <div class="topBtn"> 
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" > Account</button>
-          <div class="dropdown-content">
-              <a href="Create.php">My Profile</a>
-              <a href="ES.php">Customer Mode</a>
-              <a href="https://example.com">My Events</a>
-              <a href="SE.php">Logout</a>
-          </div>
-         </div>
-      </div>
+        <h1> Event Listings </h1> 
+        <div class="topBtn"> 
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" > Account</button>
+            <div class="dropdown-content">
+                <a href="userSettings.php">My Profile</a>
+                <a href="ES.php">Customer Mode</a>
+                <a href="https://example.com">My Events</a>
+                <a href="Confirm_Logout.php">Logout</a>
+            </div>
+           </div>
+        </div>
+        
     </header>
     <main class="box2">
-        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
                 <ul class="navbar-nav me-auto">
@@ -40,10 +41,11 @@ include_once("config.php");
                       <a class="nav-link" href="ESDetailsManager.php">Details</a>
                     </li>
                     <li class = "nav-item">
-                        <a class="nav-link" href="ESCreate.php">Create</a>
+                    <a class="nav-link" href="ESCreate.php">Create
+                    </a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link" href="ESManage.php">Manage</a>
+                        <a class="nav-link" href="ESManage.php">Manage</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -60,79 +62,37 @@ include_once("config.php");
                 <th scope="col">Event Location</th>
                 <th scope="col">Event Time</th>
                 <th scope="col">Zip Code</th>
+                <th scope="col">RSVP</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Table Top</td>
-                <td>Fort Smith</td>
-                <td>Saturday 9 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Card Game</td>
-                <td>Little Rock</td>
-                <td>Sunday 2 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Fayetteville</td>
-                <td>Friday 8 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Hot Springs</td>
-                <td>Monday 7 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Bentonville</td>
-                <td>Wednesday 6 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Card Game</td>
-                <td>Jonesboro</td>
-                <td>Saturday 3 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Conway</td>
-                <td>Tuesday 5 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Springdale</td>
-                <td>Thursday 4 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Rogers</td>
-                <td>Friday 9 P.M.</td>
-                <td>72944</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Card Game</td>
-                <td>North Little Rock</td>
-                <td>Monday 6 P.M.</td>
-                <td>72944</td>
-            </tr>            
+                <?php
+               
+                $stmt = $mysqli->prepare("SELECT EVENT_ID, EVENT_NAME, STREET_ADD, ZIPCODE, DATETIME FROM EVENTS");
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+
+                 while ($row = $result->fetch_assoc()) { 
+                        echo "<tr>";
+                        echo "<td></td>";
+                        echo "<td>" . htmlspecialchars($row['EVENT_NAME']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['STREET_ADD']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['DATETIME']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['ZIPCODE']) . "</td>";
+                        echo "<td>
+                            	<form action='save_RSVP.php' method='POST'>
+				    <input type='hidden' name='id' value=" . $row['EVENT_ID'] . ">
+				    <input type='radio' name='rsvp' value=1> Going
+				    <br>
+				    <input type='radio' name='rsvp' value=2> Not Going
+				    <br>
+				    <button type='submit' class='btn btn-primary'>Submit</button>
+				</form>
+                          </td>";
+                        echo "</tr>";
+                    }
+                ?>
             </tbody>
           </table>
 
