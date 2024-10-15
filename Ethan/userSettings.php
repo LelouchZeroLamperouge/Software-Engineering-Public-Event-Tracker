@@ -28,9 +28,24 @@
             echo "No changes";
         }else{
             if(empty($pass)){
+
+                $sql = "SELECT * FROM USERS WHERE EMAIL = ?"; 
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("s", $email);
+        
+                $stmt->execute();
+        
+                $result = $stmt->get_result();
+        
+        
+                if ($result->num_rows === 0) {
+
                 $stmt = $mysqli->prepare("UPDATE USERS SET EMAIL = ? WHERE USER_ID = ?");
                 $stmt->bind_param("si",$email,$user_id);
                 $stmt->execute();
+                }else{
+                    echo "Email already exists";
+                }
 
             }else{
                 if(empty($email)){
@@ -39,9 +54,22 @@
                     $stmt->execute();
     
                 }else{
-                    $stmt = $mysqli->prepare("UPDATE USERS SET EMAIL = ? WHERE USER_ID = ?");
-                    $stmt->bind_param("si",$email,$user_id);
+                    $sql = "SELECT * FROM USERS WHERE EMAIL = ?"; 
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param("s", $email);
+            
                     $stmt->execute();
+            
+                    $result = $stmt->get_result();
+            
+            
+                    if ($result->num_rows === 0) {
+                        $stmt = $mysqli->prepare("UPDATE USERS SET EMAIL = ? WHERE USER_ID = ?");
+                        $stmt->bind_param("si",$email,$user_id);
+                        $stmt->execute();
+                    }else{
+                        echo "Email already exists";
+                    }
 
                     $stmt = $mysqli->prepare("UPDATE USERS SET PASSWORD = ? WHERE USER_ID = ?");
                     $stmt->bind_param("si",$hashed,$user_id);
