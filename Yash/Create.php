@@ -58,7 +58,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $stmt = $mysqli->prepare("INSERT INTO USERS (F_NAME,L_NAME,EMAIL,PASSWORD,ORGANIZATION,ADMIN,NOTIFICATIONS) VALUES (?,?,?,?,?,?,?)");
             $stmt->bind_param("ssssiii",$fName,$lName,$email,$hashed,$org,$admin,$notif);
             $stmt->execute();
+
+            session_start();
+            $email = $_POST['email'];
+            $sql = "SELECT USER_ID FROM USERS WHERE EMAIL = ?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $user_id = $row['USER_ID'];
+                }
+            } else {
+                echo "No users found.";
             }
+
+            $_SESSION['user_id'] = $user_id;
+            header("Location: ES.php");
+            }
+
+        
            
            
         }
@@ -85,18 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <header>
         <img class=".img1" src="2.png">
         <h1>Welcome to EventHub</h1>
-
-        <div class="topBtn"> 
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" > Account</button>
-              <div class="dropdown-content">
-                  <a href="Create.php">My Profile</a>
-                  <a href="ESManageer.php">Creator Mode</a>
-                  <a href="https://example.com">My Events</a>
-                  <a href="SE.php">Logout</a>
-              </div>
-             </div>
-          </div>
     </header>
     <main>
         
@@ -152,8 +161,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </select>
                 <span>*</span>
                 <br>
+                <div class="botBtn1">
+                    <br>
+                    <button type="submit" id="createBtn">Create Account</button>
 
-                <button type="submit" class="btn btn-link2" id="createBtn">Create Account</button>
+                </div>
                 <br>
                 </form>
             </fieldset>

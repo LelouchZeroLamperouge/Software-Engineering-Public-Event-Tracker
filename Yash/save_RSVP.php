@@ -1,58 +1,39 @@
 <?php
 include_once("config.php");
 
-session_start();
-if (isset($_SESSION['user_id']))
-{
-  $user_id = $_SESSION['user_id'];
-}
-else
-{
-  header("Location: SE.php");
-  exit();
-}
-
-// Will display errors to the webpage
+// Display errors for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Check if an event ID is provided to fetch its details for editing
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Fetch event details from the database for the provided ID
-    $sql = "SELECT * FROM EVENTS WHERE EVENT_ID = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $record = $result->fetch_assoc();
-    } else {
-        echo "<p class='error'>Event not found.</p>";
-        exit();
-    }
+// Check if an event ID is provided
+if (isset($_POST['id'])) {
+     $event_id = (int)$_POST['id'];
 } else {
     echo "<p class='error'>No event ID provided.</p>";
     exit();
 }
 
-// Handle form submission to update the event
+                
+		
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get updated values from the form
-    
-    
-
-    // Update the event in the database
-    $sql = "DELETE FROM EVENTS WHERE EVENT_ID = ?";
+    // Get the RSVP status from the form
+    $rsvp = $_POST['rsvp'];
+    // Insert into EVENT_STATUS table
+    $sql = "INSERT INTO EVENT_STATUS (USER_ID, EVENT_ID, STATUS_ID) VALUES (?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param('i', $id);
+    
+    // Assuming a static USER_ID of 1 for this example. Change this to dynamically fetch USER_ID if needed.
+    $user_id = 3;
+    
+    // Bind parameters (USER_ID, EVENT_ID, STATUS_ID)
+    $stmt->bind_param('iii', $user_id, $event_id, $rsvp);
 
+    // Execute and check for success
     if ($stmt->execute()) {
-        echo "<p class='success'>Event updated successfully.</p>";
-        header("Location: ESManage.php"); // Redirect after successful update
+        echo "<p class='success'>RSVP successfully submitted.</p>";
+        header("Location: ES.php"); // Redirect after successful submission
         exit();
     } else {
         echo "<p class='error'>Error updating event: " . $mysqli->error . "</p>";
@@ -114,11 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="box3">
             <fieldset>
-                <legend> Are you sure you want to Delete this event? </legend>
+                <legend> Save Event?</legend>
 
                 <!-- Form to update the event -->
                 <form method="POST" action="">
-                    <button type="submit" class="btn btn-link" id="updateBtn">Delete Event</button>
+                    <button type="submit" class="btn btn-link" id="updateBtn">Submit</button>
                 </form>
             </fieldset>
         </div>
@@ -140,3 +121,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </footer>
 
 </html>
+

@@ -22,13 +22,14 @@ include_once("config.php");
                 <a href="Create.php">My Profile</a>
                 <a href="ESManageer.php">Creator Mode</a>
                 <a href="https://example.com">My Events</a>
-                <a href="SE.php">Logout</a>
+                <a href="Confirm_Logout.php">Logout</a>
             </div>
            </div>
         </div>
         
     </header>
     <main class="box2">
+        <div >
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
@@ -41,9 +42,6 @@ include_once("config.php");
                     <a class="nav-link active" href="ES.php">Home
                       <span class="visually-hidden">(current)</span>
                     </a>
-                    <li class="nav-item">
-                      <a class="nav-link" href="ESDetails.php">Details</a>
-                    </li>
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-sm-2" type="search" id="SearchBar" placeholder="Search">
@@ -52,140 +50,99 @@ include_once("config.php");
               </div>
             </div>
           </nav>
-          <table class="table table-hover" id="ET">
-            <thead>
-              <tr class="table-active">
-                <th scope="col">Status</th>
-                <th scope="col">Event Name</th>
-                <th scope="col">Event Location</th>
-                <th scope="col">Event Time</th>
-                <th scope="col">Zip Code</th>
-                <th scope="col">RSVP</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Table Top</td>
-                <td>Fort Smith</td>
-                <td>Saturday 9 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Card Game</td>
-                <td>Little Rock</td>
-                <td>Sunday 2 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Fayetteville</td>
-                <td>Friday 8 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Hot Springs</td>
-                <td>Monday 7 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Bentonville</td>
-                <td>Wednesday 6 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Card Game</td>
-                <td>Jonesboro</td>
-                <td>Saturday 3 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Conway</td>
-                <td>Tuesday 5 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Table Top</td>
-                <td>Springdale</td>
-                <td>Thursday 4 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Active</th>
-                <td>Board Game</td>
-                <td>Rogers</td>
-                <td>Friday 9 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Inactive</th>
-                <td>Card Game</td>
-                <td>North Little Rock</td>
-                <td>Monday 6 P.M.</td>
-                <td>72944</td>
-                <td>
-                  <input type="radio" name="rsvp" value="going"> Going
-                  <br>
-                  <input type="radio" name="rsvp" value="notgoing"> Not Going
-                </td>
-            </tr>            
-            </tbody>
-          </table>
+</div>
+<div>
+        <div class="row">            
+                <?php
+               
+                $stmt = $mysqli->prepare("SELECT * FROM EVENTS");
+
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+       
+// Array mapping categories to image URLs
+$category_images = array(
+    "sport" => "sports.png",
+    "gaming" => "gaming.png",
+    "movies" => "movies.png",
+    "music" => "music.png",
+    "meetup" => "meetup.png",
+    "studying" => "studying.png",
+    "pets" => "pets.png",
+    "dancing" => "dancing.png",
+    "reading" => "reading.png",
+    "cosplay" => "cosplay.png",
+    "sewing" => "sewing.png",
+    "hiking" => "hiking.png",
+    "quilting" => "quilting.png",
+    "tableTop" => "tabletop.png",
+    "cardGame" => "cardgame.png"
+);
+
+// Check if the category has an associated image
+
+
+        while ($row = $result->fetch_assoc()) {
+            echo '<div class="col-lg-4 mb-3">'; // "mb-3" adds margin-bottom for spacing between cards
+            echo '<div class="card">';
+            echo '<h3 class="card-header">Event</h3>';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . htmlspecialchars($row['EVENT_NAME']) . '</h5>';
+            echo '</div>'; // Closing the card-body div correctly
+            $cat_id = $row['CATEGORY'];
+            $testing = "SELECT CATEGORY_NAME FROM CATEGORIES WHERE CATEGORY_ID = ?";
+            $wassup = $mysqli->prepare($testing);
+            $wassup->bind_param('i', $cat_id);
+            $wassup->execute();
+            $yippee = $wassup->get_result();
+            while ($uwu = $yippee->fetch_assoc())
+            {
+                $category = $uwu['CATEGORY_NAME'];
+            }
+            if (array_key_exists($category, $category_images)) {
+                $image_url = $category_images[$category];
+            } else {
+                $image_url = "path/to/default_image.jpg";
+            }
+            echo '<img src="' . htmlspecialchars($image_url) . '"  class="card-img-top" alt="' . htmlspecialchars($event_category) . '">';
+            echo '<div class="card-body">';
+            echo '<p class="card-text" style="display: inline-block; white-space: normal; word-wrap: break-word;">' . htmlspecialchars($row['EVENT_DESCR']) . '</p>';
+            echo '</div>';
+            echo '<div class="card">';
+            echo '<ul class="list-group list-group-flush">';
+            echo '<div class="textAlign">';
+            echo '<li class="list-group-item textAlign"> Street: ' . htmlspecialchars($row['STREET_ADD']) . '</li>';
+            echo '<li class="list-group-item textAlign"> Date: ' . htmlspecialchars($row['DATETIME']) . '</li>';
+            echo '<li class="list-group-item textAlign"> Zip: ' . htmlspecialchars($row['ZIPCODE']) . '</li>';
+            echo '</div>';
+            echo '</ul>';
+            echo '<form action="save_RSVP.php" method="POST">
+                    <input type="hidden" name="event_id" value="' . $row["EVENT_ID"] . '">
+                    <input type="hidden" name="user_id" value="' . $user_id . '">
+                    <div style="display: flex; align-items: center;">
+                        <label>
+                        <input type="radio" name="rsvp" value="3"> Going
+                        </label>
+                        <label style="margin-left: 5%;">
+                        <input type="radio" name="rsvp" value="1"> Not Going
+                        </label>
+                        <label style="margin-left: 5%;">
+                        <input type="radio" name="rsvp" value="2"> Interested
+                        </label>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 5%;">Submit</button>
+                    </div>
+                    </form>';
+            echo '</div>'; // Closing the card div
+            echo '</div>';
+            echo '<div class="card-footer">';
+            echo '</div>';
+            echo '</div>'; // Closing the col-lg-4 div
+        }
+                ?>
+                </div>
+                </div>
+                
 
     </main>
     

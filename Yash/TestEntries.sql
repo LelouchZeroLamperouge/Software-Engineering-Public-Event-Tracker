@@ -12,12 +12,6 @@ VALUES
 ('Interested'),
 ('Going');
 
-INSERT INTO CATEGORIES (CATEGORY_NAME)
-VALUES
-('Sports'),
-('Quilting'),
-('Hiking');
-
 INSERT INTO EVENTS (EVENT_NAME, EVENT_DESCR, STREET_ADD,CITY,ZIPCODE,CREATOR,CATEGORY,DATETIME,WEBSITE)
 VALUES 
 ('Arkansas Tech Conference', 'A technology conference for developers in Arkansas.', '546', 'LR', 71937, 1, 1, '2024-10-15 09:00:00', 'https://arktechconf.com'),

@@ -2,20 +2,18 @@
 <html lang="en">
 
 <?php
+include_once("config.php");
 
-/* Verifying the user is logged in. If it is, it saves the user_id for future use. If not, it redirects to login page.
 session_start();
-if(isset($_SESSION['user_id']))
+if (isset($_SESSION['user_id']))
 {
   $user_id = $_SESSION['user_id'];
 }
 else
 {
-  #header("Location: login.php");
+  header("Location: SE.php");
   exit();
-}*/
-
-include_once("config.php");
+}
 
 # Will display errors
 ini_set('display_errors', 1);
@@ -42,11 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $eventZip = $_POST['event_zip'];
     $eventCat = $_POST['event_cat'];
     $eventDate = $_POST['event_date'];
-    $creator = 1;
     $website = $_POST['website'];
 
     # Verifying that none of the values are empty
-    if (empty($creator)|| empty($website) || empty($eventName) || empty($eventDescr) || empty($eventStreet) || empty($eventCity) || empty($eventZip) || empty($eventCat) || empty($eventDate))
+    if (empty($website) || empty($eventName) || empty($eventDescr) || empty($eventStreet) || empty($eventCity) || empty($eventZip) || empty($eventCat) || empty($eventDate))
     {
         echo "One or more of the values is empty";
     }
@@ -79,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
       # Executing insert statement to create the event
       $stmt = $mysqli->prepare("INSERT INTO EVENTS (EVENT_NAME,EVENT_DESCR,STREET_ADD,CITY,ZIPCODE,CREATOR,CATEGORY,DATETIME,WEBSITE) VALUES (?,?,?,?,?,?,?,?,?)");
-      $stmt->bind_param("sssssiiss",$eventName,$eventDescr,$eventStreet,$eventCity,$eventZip,$creator,$category,$eventDate,$website);
+      $stmt->bind_param("sssssiiss",$eventName,$eventDescr,$eventStreet,$eventCity,$eventZip,$user_id,$category,$eventDate,$website);
       $stmt->execute();
     }
 }
@@ -103,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
               <a href="Create.php">My Profile</a>
               <a href="ES.php">Customer Mode</a>
               <a href="https://example.com">My Events</a>
-              <a href="SE.php">Logout</a>
+              <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
       </div>
@@ -117,9 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
                     <a class="nav-link" href="ESManageer.php">Home</a>
-                    <li class="nav-item">
-                      <a class="nav-link" href="ESDetailsManager.php">Details</a>
-                    </li>
                     <li class = "nav-item">
                     <a class="nav-link active" href="ESCreate.php">Create
                         <span class="visually-hidden">(current)</span>
@@ -194,17 +188,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 <span>*</span>
                 <br>
 
-                <label class="col-form-label mt-4" for="inputDefault">Creator ID:</label>
+               <!-- <label class="col-form-label mt-4" for="inputDefault">Creator ID:</label>
                 <input type="text" class="form-control-2" placeholder="Creator" id="Date" name="creator">
                 <span>*</span>
-                <br>
+                <br>-->
 
                 <label class="col-form-label mt-4" for="inputDefault">Website:</label>
                 <input type="text" class="form-control-2" placeholder="Website" id="Date" name="website">
                 <span>*</span>
                 <br>
-
-                <button type="submit" class="btn btn-link2" id="createBtn">Create Event</button>
+                <div class="botBtn1">
+                  <br>
+                 <button type="submit"  id="createBtn">Create Event</button>
+                </div>
                 </form>
 
             </fieldset>
