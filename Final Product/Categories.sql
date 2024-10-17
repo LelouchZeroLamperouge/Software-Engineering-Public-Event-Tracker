@@ -1,0 +1,16 @@
+﻿INSERT INTO CATEGORIES(CATEGORY_NAME) VALUES
+('sport'),
+('gaming'),
+('movies'),
+('music'),
+('meetup'),
+('studying'),
+('pets'),
+('dancing'),
+('reading'),
+('cosplay'),
+('sewing'),
+('hiking'),
+('quilting'),
+('tableTop'),
+('cardGame');
