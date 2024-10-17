@@ -11,6 +11,32 @@ else
   header("Location: SE.php");
   exit();
 }
+
+# Will display errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$currentDate = date('Y-m-d H:i:s');
+$sql = "SELECT * FROM EVENTS WHERE DATE(DATETIME) < DATE(2024-10-15)";
+$stmt = $mysqli->prepare($sql);
+//$stmt->bind_param('s', $currentDate);
+
+if ($stmt->execute())
+{
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc())
+  {
+    $delete = "DELETE FROM EVENT_STATUS WHERE EVENT_ID = ?";
+    $id = $row['EVENT_ID'];
+    $cool = $mysqli->prepare($delete);
+    $cool->bind_param('i', $id);
+
+    $deleteRecord = "DELETE FROM EVENTS WHERE EVENT_ID = ?";
+    $wassup = $mysqli->prepare($deleteRecord);
+    $wassup->bind_param('i', $id);
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +56,9 @@ else
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" > Account</button>
           <div class="dropdown-content">
-              <a href="Create.php">My Profile</a>
+              <a href="userSettings.php">My Profile</a>
               <a href="ES.php">Customer Mode</a>
-              <a href="https://example.com">My Events</a>
+              <a href="ESMyEvents.php">My Events</a>
               <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
@@ -45,9 +71,7 @@ else
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="ESManageer.php">Home</a>
-                        <li class="nav-item">
-                          <a class="nav-link" href="ESDetailsManager.php">Details</a>
-                        </li>
+                        
                         <li class = "nav-item">
                         <a class="nav-link" href="ESCreate.php">Create</a>
                         </li>
@@ -55,6 +79,15 @@ else
                             <a class="nav-link active" href="ESManage.php">Manage
                                 <span class="visually-hidden">(current)</span>
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="FilterLocationManager.php">Filter by Location</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="FilterCategoryManager.php">Filter by Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="FilterDateManager.php">Filter by Date</a>
                         </li>
                 </ul>
                 <form class="d-flex">

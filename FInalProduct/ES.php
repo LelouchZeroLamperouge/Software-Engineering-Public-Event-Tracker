@@ -1,5 +1,81 @@
 <?php
 include_once("config.php");
+
+session_start();
+if (isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+}
+else
+{
+  header("Location: SE.php");
+  exit();
+}
+// When someone first logs in or creates an account, the DB needs to delete all events that have already happened.
+
+// This code collects the current date and selects all events that have already happened.
+
+$currentDate = date('Y-m-d');
+
+$sql = "SELECT * FROM EVENTS WHERE DATETIME < ?";
+
+$stmt = $mysqli->prepare($sql);
+
+$stmt->bind_param('s', $currentDate);
+
+
+
+// Once it has those events, it loops through them and deletes any RSVPs there might be tied to those events.
+
+// It then deletes the event.
+
+if ($stmt->execute())
+
+{
+
+  $result = $stmt->get_result();
+
+  while ($row = $result->fetch_assoc())
+
+  {
+
+    $delete = "DELETE FROM EVENT_STATUS WHERE EVENT_ID = ?";
+
+    $id = $row['EVENT_ID'];
+
+    $cool = $mysqli->prepare($delete);
+
+    $cool->bind_param('i', $id);
+
+    $cool->execute();
+
+
+
+    $deleteRecord = "DELETE FROM EVENTS WHERE EVENT_ID = ?";
+
+    $wassup = $mysqli->prepare($deleteRecord);
+
+    $wassup->bind_param('i', $id);
+
+    $wassup->execute();
+
+  }
+
+}
+
+else
+
+{
+
+    echo "Error";
+
+}
+# Will display errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,9 +95,9 @@ include_once("config.php");
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" > Account</button>
             <div class="dropdown-content">
-                <a href="Create.php">My Profile</a>
+                <a href="userSettings.php">My Profile</a>
                 <a href="ESManageer.php">Creator Mode</a>
-                <a href="https://example.com">My Events</a>
+                <a href="ESMyEvents.php">My Events</a>
                 <a href="Confirm_Logout.php">Logout</a>
             </div>
            </div>
@@ -29,6 +105,7 @@ include_once("config.php");
         
     </header>
     <main class="box2">
+        <div >
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
@@ -41,8 +118,15 @@ include_once("config.php");
                     <a class="nav-link active" href="ES.php">Home
                       <span class="visually-hidden">(current)</span>
                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="FilterLocation.php">Filter by Location</a>
+                  </li>
+                  <li class="nav-item">
+                            <a class="nav-link" href="FilterCategory.php">Filter by Category</a>
+                    </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="ESDetails.php">Details</a>
+                            <a class="nav-link" href="FilterDate.php">Filter by Date</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -52,48 +136,99 @@ include_once("config.php");
               </div>
             </div>
           </nav>
-          <table class="table table-hover" id="ET">
-            <thead>
-              <tr class="table-active">
-                <th scope="col">Status</th>
-                <th scope="col">Event Name</th>
-                <th scope="col">Event Location</th>
-                <th scope="col">Event Time</th>
-                <th scope="col">Zip Code</th>
-                <th scope="col">RSVP</th>
-                <th scope="col"> </th>
-              </tr>
-            </thead>
-            <tbody>
+</div>
+<div>
+        <div class="row">            
                 <?php
                
-                $stmt = $mysqli->prepare("SELECT EVENT_ID, EVENT_NAME, STREET_ADD, ZIPCODE, DATETIME FROM EVENTS");
+                $stmt = $mysqli->prepare("SELECT * FROM EVENTS");
+
 		$stmt->execute();
 		$result = $stmt->get_result();
 
+       
+// Array mapping categories to image URLs
+$category_images = array(
+    "sport" => "sports.png",
+    "gaming" => "gaming.png",
+    "movies" => "movies.png",
+    "music" => "music.png",
+    "meetup" => "meetup.png",
+    "studying" => "studying.png",
+    "pets" => "pets.png",
+    "dancing" => "dancing.png",
+    "reading" => "reading.png",
+    "cosplay" => "cosplay.png",
+    "sewing" => "sewing.png",
+    "hiking" => "hiking.png",
+    "quilting" => "quilting.png",
+    "tableTop" => "tabletop.png",
+    "cardGame" => "cardgame.png"
+);
 
-                 while ($row = $result->fetch_assoc()) { 
-                        echo "<tr>";
-                        echo "<td></td>";
-                        echo "<td>" . htmlspecialchars($row['EVENT_NAME']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['STREET_ADD']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['DATETIME']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['ZIPCODE']) . "</td>";
-                        echo "<td>
-                            	<form action='save_RSVP.php' method='POST'>
-				    <input type='hidden' name='id' value=" . $row['EVENT_ID'] . ">
-				    <input type='radio' name='rsvp' value=1> Going
-				    <br>
-				    <input type='radio' name='rsvp' value=2> Not Going
-				    <br>
-				    <button type='submit' class='btn btn-primary'>Submit</button>
-				</form>
-                          </td>";
-                        echo "</tr>";
-                    }
+// Check if the category has an associated image
+
+
+        while ($row = $result->fetch_assoc()) {
+            echo '<div class="col-lg-4 mb-3">'; // "mb-3" adds margin-bottom for spacing between cards
+            echo '<div class="card">';
+            echo '<h3 class="card-header">Event</h3>';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . htmlspecialchars($row['EVENT_NAME']) . '</h5>';
+            echo '</div>'; // Closing the card-body div correctly
+            $cat_id = $row['CATEGORY'];
+            $testing = "SELECT CATEGORY_NAME FROM CATEGORIES WHERE CATEGORY_ID = ?";
+            $wassup = $mysqli->prepare($testing);
+            $wassup->bind_param('i', $cat_id);
+            $wassup->execute();
+            $yippee = $wassup->get_result();
+            while ($uwu = $yippee->fetch_assoc())
+            {
+                $category = $uwu['CATEGORY_NAME'];
+            }
+            if (array_key_exists($category, $category_images)) {
+                $image_url = $category_images[$category];
+            } else {
+                $image_url = "sports.png";
+            }
+            echo '<img src="' . htmlspecialchars($image_url) . '"  class="card-img-top" alt="icon">';
+            echo '<div class="card-body">';
+            echo '<p class="card-text" style="display: inline-block; white-space: normal; word-wrap: break-word;">' . htmlspecialchars($row['EVENT_DESCR']) . '</p>';
+            echo '</div>';
+            echo '<div class="card">';
+            echo '<ul class="list-group list-group-flush">';
+            echo '<div class="textAlign">';
+            echo '<li class="list-group-item textAlign"> Street: ' . htmlspecialchars($row['STREET_ADD']) . '</li>';
+            echo '<li class="list-group-item textAlign"> Date: ' . htmlspecialchars($row['DATETIME']) . '</li>';
+            echo '<li class="list-group-item textAlign"> Zip: ' . htmlspecialchars($row['ZIPCODE']) . '</li>';
+            echo '</div>';
+            echo '</ul>';
+            echo '<form action="save_RSVP.php" method="POST">
+                    <input type="hidden" name="event_id" value="' . $row["EVENT_ID"] . '">
+                    <input type="hidden" name="user_id" value="' . $user_id . '">
+                    <div style="display: flex; align-items: center;">
+                        <label>
+                        <input type="radio" name="rsvp" value="3"> Going
+                        </label>
+                        <label style="margin-left: 5%;">
+                        <input type="radio" name="rsvp" value="1"> Not Going
+                        </label>
+                        <label style="margin-left: 5%;">
+                        <input type="radio" name="rsvp" value="2"> Interested
+                        </label>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 5%;">Submit</button>
+                    </div>
+                    </form>';
+            echo '</div>'; // Closing the card div
+            echo '</div>';
+            echo '<div class="card-footer">';
+            echo '</div>';
+            echo '</div>'; // Closing the col-lg-4 div
+        }
                 ?>
-            </tbody>
-          </table>
+                </div>
+                </div>
+                
 
     </main>
     

@@ -97,9 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" > Account</button>
           <div class="dropdown-content">
-              <a href="Create.php">My Profile</a>
+              <a href="userSettings.php">My Profile</a>
               <a href="ES.php">Customer Mode</a>
-              <a href="https://example.com">My Events</a>
+              <a href="ESMyEvents.php">My Events</a>
               <a href="Confirm_Logout.php">Logout</a>
           </div>
          </div>
@@ -114,9 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
                     <a class="nav-link" href="ESManageer.php">Home</a>
-                    <li class="nav-item">
-                      <a class="nav-link" href="ESDetailsManager.php">Details</a>
-                    </li>
                     <li class = "nav-item">
                     <a class="nav-link active" href="ESCreate.php">Create
                         <span class="visually-hidden">(current)</span>
@@ -125,6 +122,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     <li class="nav-item">
                         <a class="nav-link" href="ESManage.php">Manage</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="FilterLocationManager.php">Filter by Location</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="FilterCategoryManager.php">Filter by Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="FilterDateManager.php">Filter by Date</a>
+                        </li>
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-sm-2" type="search" id="SearchBar" placeholder="Search">
@@ -187,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 <br>
 
                 <label class="col-form-label mt-4" for="inputDefault">Event Date:</label>
-                <input type="text" class="form-control-2" placeholder="DoW Time" id="Date" name="event_date">
+                <input type="text" class="form-control-2" placeholder="YYYY-MM-DD HH:MM:SS" id="Date" name="event_date">
                 <span>*</span>
                 <br>
 

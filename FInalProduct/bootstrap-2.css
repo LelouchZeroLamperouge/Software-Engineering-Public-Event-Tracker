@@ -150,6 +150,13 @@ h1{
 .center{
   margin-left: 60%;
 }
+.cardBox{
+  display: inline-flexbox;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  padding: 5%;
+  max-width: 5%;
+}
 .botBtn1{
   --bs-bot-color: #3a3f44;
   --bs-btn-bg: #3a3f44;
@@ -176,6 +183,10 @@ img{
   margin-left: 10%;
   
 } 
+.img1{
+  height:50%;
+  width:50%;
+}
 .btn-link1{
   --bs-btn-font-weight: 400;
   --bs-btn-color: #8fb9e8;
@@ -4749,7 +4760,7 @@ textarea.form-control-lg {
 .card-img,
 .card-img-top,
 .card-img-bottom {
-  width: 100%;
+  width: 40%;
 }
 
 .card-img,

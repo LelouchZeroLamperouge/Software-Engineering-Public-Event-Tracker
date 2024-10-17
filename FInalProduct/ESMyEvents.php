@@ -11,6 +11,32 @@ else
   header("Location: SE.php");
   exit();
 }
+
+# Will display errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$currentDate = date('Y-m-d H:i:s');
+$sql = "SELECT * FROM EVENTS WHERE DATE(DATETIME) < DATE(2024-10-15)";
+$stmt = $mysqli->prepare($sql);
+//$stmt->bind_param('s', $currentDate);
+
+if ($stmt->execute())
+{
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc())
+  {
+    $delete = "DELETE FROM EVENT_STATUS WHERE EVENT_ID = ?";
+    $id = $row['EVENT_ID'];
+    $cool = $mysqli->prepare($delete);
+    $cool->bind_param('i', $id);
+
+    $deleteRecord = "DELETE FROM EVENTS WHERE EVENT_ID = ?";
+    $wassup = $mysqli->prepare($deleteRecord);
+    $wassup->bind_param('i', $id);
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +57,7 @@ else
             <button class="btn btn-primary dropdown-toggle" > Account</button>
             <div class="dropdown-content">
                 <a href="userSettings.php">My Profile</a>
-                <a href="ES.php">Customer Mode</a>
+                <a href="ESManageer.php">Creator Mode</a>
                 <a href="ESMyEvents.php">My Events</a>
                 <a href="Confirm_Logout.php">Logout</a>
             </div>
@@ -40,38 +66,38 @@ else
         
     </header>
     <main class="box2">
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div >
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="ES.php">Home</a>
+                  </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="ESManageer.php">Home
-                      <span class="visually-hidden">(current)</span>
-                    </a>
-                    <li class = "nav-item">
-                    <a class="nav-link" href="ESCreate.php">Create
-                    </a>
+                    <a class="nav-link" href="FilterLocation.php">Filter by Location</a>
+                  </li>
+                  <li class="nav-item">
+                            <a class="nav-link" href="FilterCategory.php">Filter by Category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ESManage.php">Manage</a>
-                    </li>
-                    <li class="nav-item">
-                            <a class="nav-link" href="FilterLocationManager.php">Filter by Location</a>
-                    </li>
-                    <li class="nav-item">
-                            <a class="nav-link" href="FilterCategoryManager.php">Filter by Category</a>
-                    </li>
-                    <li class="nav-item">
-                            <a class="nav-link" href="FilterDateManager.php">Filter by Date</a>
+                            <a class="nav-link" href="FilterDate.php">Filter by Date</a>
                     </li>
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-sm-2" type="search" id="SearchBar" placeholder="Search">
                   <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="Search">Search</button>
                 </form>
+              </div>
             </div>
           </nav>
-          <div class="row">            
+</div>
+<div>
+        <div class="row">            
                 <?php
                
                 $stmt = $mysqli->prepare("SELECT * FROM EVENTS");
@@ -122,7 +148,7 @@ $category_images = array(
             if (array_key_exists($category, $category_images)) {
                 $image_url = $category_images[$category];
             } else {
-                $image_url = "path/to/default_image.jpg";
+                $image_url = "sports.png";
             }
             echo '<img src="' . htmlspecialchars($image_url) . '"  class="card-img-top" alt="icon">';
             echo '<div class="card-body">';
@@ -179,5 +205,8 @@ $category_images = array(
   </script>
   <script src="https://unpkg.com/vue@3">
   </script>
-  <script src="ESManage.js"></script>
+  <script src="ES.js"></script>
 </footer>
+               
+
+                       

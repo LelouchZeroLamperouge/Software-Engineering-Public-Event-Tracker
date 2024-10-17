@@ -101,9 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <a class="nav-link" href="ESManageer.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ESDetailsManager.php">Details</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link active" href="ESCreate.php">Create
                                 <span class="visually-hidden">(current)</span>
                             </a>
